@@ -10,4 +10,5 @@ public interface TopicService {
 	
 	//查询所有的主题
 	public List<Topic> getTopics();
+	
 }
