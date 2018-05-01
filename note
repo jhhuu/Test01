@@ -1,0 +1,127 @@
+JSP的九大内置对象：
+	1out:用来输出
+	2request：用来处理客户端的请求
+		还是一个作用域对象，一次请求
+	3response:向客户端响应和处理请求
+	4session:是一次客户端与浏览器的会话(类似于两个人打电话)
+		每个session对象都具有一个sessionId。
+		每一种浏览器都有不同的sessionid
+		使用超链接打开的窗口，sessionid与父窗口一样
+		setMaxInactiveInterval(int sencond)单位是秒。
+		设置session的失效时间
+		invalidate()手动设置session的失效--一调用立马失效
+		session的失效时间还可以在项目的web.xml或者Tomcat中web.xml
+		中设置，加如下标签：单位是分钟
+			<session-config>
+   			 	<session-timeout>10</session-timeout>
+			</session-config>
+	5application:类似于系统中的全局变量，应用于Web应用中的资源共享
+	
+	九大内置对象中存在四大作用域对象
+	6page：pageContext作用域指本JSP页面的范围
+	request：一次请求
+	session：一次完整会话
+	application：面对整个Web应用程序
+	
+	6、pageContext 对象
+
+		pageContext 对象的作用是取得任何范围的参数，
+		通过它可以获取 JSP页面的out、request、reponse、session、application 等对象。
+		pageContext对象的创建和初始化都是由容器来完成的，
+		在JSP页面中可以直接使用 pageContext对象。
+
+	config 对象
+
+		config 对象的主要作用是取得服务器的配置信息。
+		通过 pageConext对象的 getServletConfig() 方法可以获取一个config对象。
+		当一个Servlet 初始化时，容器把某些信息通过 config对象传递给这个 Servlet。
+		开发者可以在web.xml 文件中为应用程序环境中的Servlet程序和JSP页面提供初始化参数。
+
+	page 对象
+
+		page 对象代表JSP本身，只有在JSP页面内才是合法的。 page隐含对象本质上包含当前 Servlet接口引用的变量，类似于Java编程中的 this 指针。
+
+	exception 对象
+
+		exception 对象的作用是显示异常信息，只有在包含 isErrorPage="true" 的页面中才可以被使用，
+		在一般的JSP页面中使用该对象将无法编译JSP文件。excepation对象和Java的所有对象一样，都具
+		有系统提供的继承结构。exception 对象几乎定义了所有异常情况。在Java程序中，
+		可以使用try/catch关键字来处理异常情况； 如果在JSP页面中出现没有捕获到的异常，
+		就会生成 exception 对象，并把 exception 对象传送到在page指令中设定的错误页面中，
+		然后在错误页面中处理相应的 exception 对象。	
+	面试题：
+		重定向和转发的区别
+			response.sendRedirect("success.jsp");
+			重定向，是在客户端发挥作用，URL地址会发生变化，不能携带信息
+			request.getRequestDispatcher("success.jsp").forward(request, response);
+			转发，是在服务器发挥作用，URL地址不会发生变化，可以携带信息
+	假设success.jsp有图片的样式，那么跳转的时候，如果采用的是转发那么图片样式没有
+	
+	/*
+		解决中文乱码问题：
+		get提交方式一
+			String username = request.getParameter("userName");
+			username = new String(username.getBytes("iso8859-1"),"utf-8");
+		get提交方式二
+			在tomcat目录conf中的server.xml文件中的Connector标签中添加
+			URIEncoding="utf-8"
+		post提交
+			在获取用户输入的信息前调用一下代码：
+				request.setCharacterEncoding("UTF-8");
+	 */
+	 WebRoot里边自己创建的文件夹和src是平级的
+	 而且WebRoot代表的就是项目的根目录
+	 
+Connection对象一开始，使我们自己每次去获取的，
+现在我们要把Connection对象统一放在连接池中
+用的时候拿出，那么连接池里边的Connection对象
+是由DataSource来负责管理的，DataSource
+又是谁实例化的---是由JNDI创建的	 
+
+
+	JSP是在服务端运行的
+软件的三层架构	
+JSP显示层
+service业务逻辑层
+dao数据访问层
+
+登录为例：checkLogin(User user)
+1.前端的JSP获取到用户和密码后，把用户名和密码封装到一个user对象中
+2.JSP拿着封装好的user对象调用service业务逻辑层的checkLogin方法
+	并把user对象传给service业务逻辑层的checkLogin方法
+3.service业务逻辑层的拿着user对象调用dao数据访问层的checkLogin方法
+	并把user对象传给dao数据访问层的checkLogin方法
+4.dao数据访问层的checkLogin方法使用user对象验证后会返回一个结果
+5.service业务逻辑层会拿到dao数据访问层的返回结果
+6.JSP显示层会拿到service业务逻辑层的返回结果
+7.在JSP中判断
+
+
+CRUD
+C---create
+R---read
+U---update
+D---delete
+
+分页：
+	1.确定SQL语句
+	2.分页当中用到了哪些变量？
+		当前页--------默认就是1
+		记录数--------select count(*) from news
+		总页数--------总页数 = 记录数  % 每页显示条数  == 0 ? 记录数  / 每页显示条数 : 记录数  / 每页显示条数 +1;
+		每页显示条数----5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

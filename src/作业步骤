@@ -1,0 +1,9 @@
+1.复制实体类和配置文件、帮助类
+2.创建NewsDao和TopicDao的接口，并写方法
+3.手写2步的实现类
+4.编写jsp页面
+	①news_list.jsp
+	②topic_add.jsp
+	③doTopic_add.jsp
+	④topic_delete.jsp
+	⑤doTopic_delete.jsp
